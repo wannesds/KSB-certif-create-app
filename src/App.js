@@ -33,7 +33,7 @@ function App() {
             <AddTodo />
           </section>
         </CombinedDataProvider>
-      ) : ( //if not logged in then
+      ) : (  //if not logged in then
         <div className="message">
           <span>You are not logged in. </span>
           <span>
