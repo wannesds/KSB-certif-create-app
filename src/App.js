@@ -1,6 +1,6 @@
 import React, {useState} from "react";
 import { LoginButton, LogoutButton, Text, useSession, CombinedDataProvider } from "@inrupt/solid-ui-react";
-import AddTodo from "./components/AddTodo/AddTodo";
+import AddTodo from "./components/AddTodo";
 
 const authOptions = {
     clientName: "Solid Todo App",
