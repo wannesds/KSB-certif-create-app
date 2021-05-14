@@ -1,20 +1,94 @@
 import React from "react";
-import { getThingAll, getUrl } from "@inrupt/solid-client";
-import { Table, TableColumn } from "@inrupt/solid-ui-react";
+import { 
+    getThingAll, 
+    setThing,
+    removeThing,
+    getUrl, 
+    getSourceUrl, 
+    saveSolidDatasetAt, 
+    addDatetime, 
+    getDatetime,
+    removeDatetime
+} from "@inrupt/solid-client";
+import { Table, TableColumn, useSession, useThing } from "@inrupt/solid-ui-react";
 
-function TodoList({ todoList }) {
+const TEXT_PREDICATE = "http://schema.org/text";
+const CREATED_PREDICATE = "http://www.w3.org/2002/12/cal/ical#created";
+const TODO_CLASS = "http://www.w3.org/2002/12/cal/ical#Vtodo";
+const TYPE_PREDICATE = "http://www.w3.org/1999/02/22-rdf-syntax-ns#type";
+const COMPLETED_PREDICATE = "http://www.w3.org/2002/12/cal/ical#completed";
+
+//react components for hooks
+
+function CompletedBody({ checked, handleCheck }) {
+    const { thing } = useThing();
+    return (
+      <label>
+        <input
+          type="checkbox"
+          checked={checked}
+          onChange={() => handleCheck(thing, checked)}
+        />
+      </label>
+    );
+}
+
+function DeleteButton({ deleteTodo }) {
+    const { thing } = useThing();
+    return (
+      <button className="delete-button" onClick={() => deleteTodo(thing)}>
+        Delete
+      </button>
+    );
+}
+
+//main function
+
+function TodoList({ todoList, setTodoList }) {
+    const { fetch } = useSession();
+
     const todoThings = todoList ? getThingAll(todoList) : [];
-    
-    const TEXT_PREDICATE = "http://schema.org/text";
-    const CREATED_PREDICATE = "http://www.w3.org/2002/12/cal/ical#created";
-    const TODO_CLASS = "http://www.w3.org/2002/12/cal/ical#Vtodo";
-    const TYPE_PREDICATE = "http://www.w3.org/1999/02/22-rdf-syntax-ns#type";
-    const COMPLETED_PREDICATE = "http://www.w3.org/2002/12/cal/ical#completed";
-
-    const thingsArray = todoThings.filter((t) => getUrl(t, TYPE_PREDICATE) === TODO_CLASS).map((t) => {
-        return { dataset: todoList, thing: t }; 
-        //filters for todo-type predicates, (don't think this is needed in current version) but it can be an extra check
+    todoThings.sort((a, b) => {
+        return (
+          getDatetime(a, CREATED_PREDICATE) - getDatetime(b, CREATED_PREDICATE)
+        );
     });
+
+    const handleCheck = async (todo, checked) => {
+        const todosUrl = getSourceUrl(todoList);
+        let updatedTodos;
+        let date;
+        if (!checked) {
+          date = new Date();
+          const doneTodo = addDatetime(todo, COMPLETED_PREDICATE, date);
+          updatedTodos = setThing(todoList, doneTodo, { fetch });
+        } else {
+          const date = getDatetime(todo, COMPLETED_PREDICATE);
+          const undoneTodo = removeDatetime(todo, COMPLETED_PREDICATE, date);
+          updatedTodos = setThing(todoList, undoneTodo, { fetch });
+        }
+        const updatedList = await saveSolidDatasetAt(todosUrl, updatedTodos, {
+          fetch,
+        });
+        setTodoList(updatedList);
+    };
+
+    const deleteTodo = async (todo) => {
+        const todosUrl = getSourceUrl(todoList);
+        const updatedTodos = removeThing(todoList, todo);
+        const updatedDataset = await saveSolidDatasetAt(todosUrl, updatedTodos, {
+            fetch,
+        });
+        setTodoList(updatedDataset)
+    };
+
+    const thingsArray = todoThings
+        //filters for todo-type predicates, (don't think this is needed in current version) but it can be an extra check
+        .filter((t) => getUrl(t, TYPE_PREDICATE) === TODO_CLASS)
+        .map((t) => {
+            return { dataset: todoList, thing: t }; 
+        
+        });
 
     if (!thingsArray.length) return null;
 
@@ -24,22 +98,28 @@ function TodoList({ todoList }) {
             Your to-do list has {todoThings.length} items
             </span>
             <Table className="table" things={thingsArray}>
-            <TableColumn property={TEXT_PREDICATE} header="" />
+                <TableColumn 
+                    property={TEXT_PREDICATE} 
+                    header="To Do" 
+                    sortable
+                />
                 <TableColumn
                     property={CREATED_PREDICATE}
                     dataType="datetime"
                     header="Created At"
                     body={({ value }) => value.toDateString()}
+                    sortable
                 />
                 <TableColumn
                     property={COMPLETED_PREDICATE}
                     dataType="datetime"
                     header="Done"
-                    body={({ value }) => (
-                        <label>
-                            <input type="checkbox" />
-                        </label>
-                    )}
+                    body={({ value }) => <CompletedBody checked={Boolean(value)} handleCheck={handleCheck} />}
+                />
+                <TableColumn
+                    property={TEXT_PREDICATE}
+                    header=""
+                    body={() => <DeleteButton deleteTodo={deleteTodo} />}
                 />
             </Table>
         </div>
