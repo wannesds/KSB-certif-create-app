@@ -3,42 +3,21 @@ import {
   addUrl,
   addStringNoLocale,
   createThing,
-  getSolidDataset,
   getSourceUrl,
-  getUrlAll,
   saveSolidDatasetAt,
   setThing,
-  getThing,
 } from "@inrupt/solid-client";
 import { useSession } from "@inrupt/solid-ui-react";
-import React, { useEffect, useState } from "react";
-import { getOrCreateTodoList } from "../../utils";
+import React, {useState } from "react";
 
-const STORAGE_PREDICATE = "http://www.w3.org/ns/pim/space#storage";
 const TEXT_PREDICATE = "http://schema.org/text";
 const CREATED_PREDICATE = "http://www.w3.org/2002/12/cal/ical#created";
 const TODO_CLASS = "http://www.w3.org/2002/12/cal/ical#Vtodo";
 const TYPE_PREDICATE = "http://www.w3.org/1999/02/22-rdf-syntax-ns#type";
 
-function AddTodo() {
+function AddTodo({ todoList, setTodoList}) {
   const { session } = useSession();
-  const [todoList, setTodoList] = useState();
   const [todoText, setTodoText] = useState("");
-
-  useEffect(() => {
-    if (!session) return;
-    (async () => {
-      const profileDataset = await getSolidDataset(session.info.webId, {
-        fetch: session.fetch,
-      });
-      const profileThing = getThing(profileDataset, session.info.webId);
-      const podsUrls = getUrlAll(profileThing, STORAGE_PREDICATE);
-      const pod = podsUrls[0];
-      const containerUri = `${pod}todos/`;
-      const list = await getOrCreateTodoList(containerUri, session.fetch);
-      setTodoList(list);
-    })();
-  }, [session]);
 
   const addTodo = async (text) => {
     const indexUrl = getSourceUrl(todoList);
@@ -59,6 +38,7 @@ function AddTodo() {
   const handleSubmit = async (event) => {
     event.preventDefault();
     addTodo(todoText);
+    setTodoText("");
   };
 
   const handleChange = (e) => {
@@ -67,7 +47,6 @@ function AddTodo() {
   };
 
   return (
-    <>
       <form onSubmit={handleSubmit} className="todo-form">
         <label htmlFor="todo-input">
           <input
@@ -81,7 +60,6 @@ function AddTodo() {
           Add Todo
         </button>
       </form>
-    </>
   );
 }
 

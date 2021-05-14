@@ -1,6 +1,11 @@
-import React, {useState} from "react";
+import React, { useEffect, useState } from "react";
 import { LoginButton, LogoutButton, Text, useSession, CombinedDataProvider } from "@inrupt/solid-ui-react";
+import { getSolidDataset, getUrlAll, getThing } from "@inrupt/solid-client";
 import AddTodo from "./components/AddTodo";
+import TodoList from "./components/TodoList";
+import { getOrCreateTodoList } from "./utils";
+
+const STORAGE_PREDICATE = "http://www.w3.org/ns/pim/space#storage";
 
 const authOptions = {
     clientName: "Solid Todo App",
@@ -8,11 +13,27 @@ const authOptions = {
 
 function App() {
   const { session } = useSession();
+  const [todoList, setTodoList] = useState();
   const [oidcIssuer, setOidcIssuer] = useState("");
 
   const handleChange = (event) => {
     setOidcIssuer(event.target.value);
   };
+
+  useEffect(() => {
+    if (!session || !session.info.isLoggedIn) return;
+    (async () => {
+      const profileDataset = await getSolidDataset(session.info.webId, {
+        fetch: session.fetch,
+      });
+      const profileThing = getThing(profileDataset, session.info.webId);
+      const podsUrls = getUrlAll(profileThing, STORAGE_PREDICATE);
+      const pod = podsUrls[0];
+      const containerUri = `${pod}todos/`;
+      const list = await getOrCreateTodoList(containerUri, session.fetch);
+      setTodoList(list);
+    })();
+  }, [session, session.info.isLoggedIn]);
 
   return (
     <div className="app-container">
@@ -30,7 +51,8 @@ function App() {
               <LogoutButton />
           </div>
           <section>
-            <AddTodo />
+            <AddTodo todoList={todoList} setTodoList={setTodoList}/>
+            <TodoList todoList={todoList} setTodoList={setTodoList}/>
           </section>
         </CombinedDataProvider>
       ) : (  //if not logged in then
@@ -49,6 +71,7 @@ function App() {
            <datalist id="providers">
              <option value="https://broker.pod.inrupt.com/" />
              <option value="https://inrupt.net/" />
+             <option value="https://solidcommunity.net" />
            </datalist>
           </span>
           <LoginButton
