@@ -10,12 +10,15 @@ import {
 import { useSession } from "@inrupt/solid-ui-react";
 import React, {useState } from "react";
 
+//still has to be updated with correct structure for chosen certificate format
+//wil eventually only have to be called after a succesfull validation got stored on-chain
+
 const TEXT_PREDICATE = "http://schema.org/text";
 const CREATED_PREDICATE = "http://www.w3.org/2002/12/cal/ical#created";
 const TODO_CLASS = "http://www.w3.org/2002/12/cal/ical#Vtodo";
 const TYPE_PREDICATE = "http://www.w3.org/1999/02/22-rdf-syntax-ns#type";
 
-function AddTodo({ todoList, setTodoList}) {
+function AddCertif({ todoList, setTodoList}) {
   const { session } = useSession();
   const [todoText, setTodoText] = useState("");
 
@@ -38,7 +41,7 @@ function AddTodo({ todoList, setTodoList}) {
   const handleSubmit = async (event) => {
     event.preventDefault();
     addTodo(todoText);
-    setTodoText("");
+    //setTodoText("");
   };
 
   const handleChange = (e) => {
@@ -63,4 +66,4 @@ function AddTodo({ todoList, setTodoList}) {
   );
 }
 
-export default AddTodo;
+export default AddCertif;

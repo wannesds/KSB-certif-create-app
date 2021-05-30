@@ -4,7 +4,7 @@ import {
     saveSolidDatasetAt,
   } from "@inrupt/solid-client";
   
-  export async function getOrCreateTodoList(containerUri, fetch) {
+  export async function getOrCreateCertifList(containerUri, fetch) {
     const indexUrl = `${containerUri}index.ttl`;
     try {
       const todoList = await getSolidDataset(indexUrl, { fetch });
