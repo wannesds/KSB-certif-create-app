@@ -3,8 +3,9 @@ import { LoginButton, LogoutButton, Text, useSession, CombinedDataProvider } fro
 import { getSolidDataset, getUrlAll, getThing } from "@inrupt/solid-client";
 import { getOrCreateCertifList } from "./utils/getOrCreateCertifList";
 import AddCertif from "./components/addCertif";
-import MerkleTools from "merkle-tools";
-//import MerkleTree from "merkle-tools";
+//import { CheckQue } from "./utils/checkQue";
+
+
 //custom alchemy API for connecting to an ethereum node, seems good for developing purposes and low scale app usage
 
 const STORAGE_PREDICATE = "http://www.w3.org/ns/pim/space#storage";
@@ -13,18 +14,18 @@ const authOptions = {
     clientName: "Certif-create App",
   };
 
- const QueList = [
+ const queList = [
     {
       certifID : "UC-4fd7adbc-9a20-4a86-b3ed-ba179b88429c",
-      WebID : "https://wannes.solidcommunity.net/"
+      webID : "https://wannes.solidcommunity.net/profile/card#me"
     },
     {
       certifID : "UC-3a3efcc3-1aa0-1a5e-e498-51edd6b9a23a",
-      WebID : "https://bob.solidcommunity.net/"
+      webID : "https://bob.solidcommunity.net/"
     },
     {
       certifID : "UC-2e5abd10-160c-9aed-b1fd-ba179b88429c",
-      WebID : "https://alice.solidcommunity.net/"
+      webID : "https://alice.solidcommunity.net/"
     }
 ];
 
@@ -94,6 +95,7 @@ function App() {
     setOidcIssuer(event.target.value);
   };
 
+
   useEffect(() => {
     if (!session || !session.info.isLoggedIn) return;
     (async () => {
@@ -106,6 +108,10 @@ function App() {
       const containerUri = `${pod}certificates/`;
       const list = await getOrCreateCertifList(containerUri, session.fetch);
       //setTodoList(list);
+      
+      const queCertif = queList.find(x => x.webID===session.info.webId).certifID;
+      console.log(queCertif);
+      //console.log();
     })();
   }, [session, session.info.isLoggedIn]);
 
@@ -129,6 +135,8 @@ function App() {
           <section>
             <AddCertif todoList={todoList} setTodoList={setTodoList}/>
             {/*<TodoList todoList={todoList} setTodoList={setTodoList}/> */}
+            
+
           </section>
         </CombinedDataProvider>
       ) : (  //if not logged in then
