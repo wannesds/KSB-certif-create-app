@@ -1,10 +1,11 @@
 import React from 'react';
+import {Web3 } from 'web3';
 
 function SendTxn({}){
 
     //section for connecting to eth thru metamask, put in own file and call it when user wants to do a transaction
     window.addEventListener('load', async () => {
-    const Web3 = require('web3');
+    //const Web3 = require('web3');
     const web3 = new Web3("https://eth-rinkeby.alchemyapi.io/v2/aOmf3RlJunKUJcRWbVXWMdZukj_SMvTl");
     // Modern dapp browsers...
     if (window.ethereum) {
