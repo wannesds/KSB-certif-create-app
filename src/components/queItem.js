@@ -1,8 +1,19 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { SendTxn } from './sendTxn';
 
 function QueItem({data}){
-    const [txHash, setTxHash] = useState('');
+    const [resTxHash, setResTxHash] = useState('');
+
+    useEffect(() => {
+        console.log('useEffect resTxHash : ' , resTxHash)
+    },[resTxHash])
+
+    const callSendTxn = (e) => {
+        e.preventDefault();
+        const res = SendTxn(data, (txHash => setResTxHash(txHash)));
+        setResTxHash(res);
+        console.log('callSendTxn' , resTxHash, 'test', res)
+    }
 
     return(
         <div>
@@ -10,9 +21,9 @@ function QueItem({data}){
             <p>{data.webID}</p>
             <input
                 type="text"
-                value={txHash}
+                Value={resTxHash}
             />
-            <button onClick={() => SendTxn(data,(txHash => setTxHash(txHash)))}>
+            <button onClick={callSendTxn}>
                 Put on Chain
             </button>
         </div>

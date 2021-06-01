@@ -5,7 +5,7 @@ function CreateHash({WebID, Certif}) {
     const leaves = [WebID, Certif].map(x => SHA256(x))
     const tree = new MerkleTree(leaves, SHA256)
     const root = tree.getRoot().toString('hex')
-    console.log('root', root)
+    console.log('hashroot created : ', root)
     // const leaf = SHA256('a')
     // const proof = tree.getProof(leaf)
     // console.log(tree.verify(proof, leaf, root))

@@ -1,13 +1,14 @@
 
-import { Web3 } from 'web3';
+import Web3 from 'web3';
 import CreateHash from '../utils/createHash';
 
 export async function SendTxn(data){
-    console.log('sendTxn file', data)
-    const Web3 = require('web3');
+    console.log('sendTxn receives:', data)
+    //const Web3 = require('web3');
     const web3 = new Web3("https://eth-rinkeby.alchemyapi.io/v2/aOmf3RlJunKUJcRWbVXWMdZukj_SMvTl");
     if (window.ethereum) {
         window.web3 = new Web3("https://eth-rinkeby.alchemyapi.io/v2/aOmf3RlJunKUJcRWbVXWMdZukj_SMvTl");
+        const txHash = "";
         try {
 
                 const toBeStoredHash = CreateHash(data.webID, data.certifID,(res => res));
@@ -29,18 +30,29 @@ export async function SendTxn(data){
                     method: 'eth_sendTransaction',
                     params: [transactionParameters],
                 })//callback hash passed down
+                return (txHash)
                 .then(txHash => {
                     //transaction gets send to on-chain 
                     window.ethereum.request({
                     method: 'eth_sendRawTransaction',
                     params: [txHash],
                     })
+                    //console.log('sendTxn ends with tx hash : ', txHash);
+                    
+                    console.log('txHash', txHash)
+                    
                 });
-                return (txHash);
+                
+                
+                
                 //Show transaction processing progress, NEEDED UX feature 
 
         } catch (error) {
                 console.log(error, 'failed')
         }
+        //return (resTxHash);
     }
+    
+    //console.log('sendTxn ends+ with res tx hash : ', resTxHash);
+
 }
