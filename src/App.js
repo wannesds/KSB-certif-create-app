@@ -3,7 +3,6 @@ import { LoginButton, LogoutButton, Text, useSession, CombinedDataProvider } fro
 import { getSolidDataset, getUrlAll, getThing } from "@inrupt/solid-client";
 import { getOrCreateCertifList } from "./utils/getOrCreateCertifList";
 import AddCertif from "./components/addCertif";
-import  { CheckQue } from "./utils/checkQue";
 import QueList from './components/queList.js';
 
 
@@ -37,7 +36,7 @@ function App() {
       const podsUrls = getUrlAll(profileThing, STORAGE_PREDICATE);
       const pod = podsUrls[0];
       const containerUri = `${pod}certificates/`;
-      const list = await getOrCreateCertifList(containerUri, session.fetch);
+      await getOrCreateCertifList(containerUri, session.fetch);
     })();
   }, [session, session.info.isLoggedIn]);
 

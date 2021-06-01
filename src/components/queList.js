@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import checkQue from '../utils/checkQue';
 import QueItem from './queItem';
 
@@ -7,9 +7,7 @@ function QueList(){
     console.log(queListFeed)
     return(
         <section>
-            { //queListFeed.map(item => <QueItem data={item}/>) 
-            
-            }
+            { queListFeed.map(item => <QueItem data={item}/>) }
         </section>
     );
 }

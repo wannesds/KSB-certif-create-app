@@ -1,4 +1,3 @@
-import React from 'react';
 import MerkleTree from 'merkletreejs';
 import SHA256 from 'crypto-js/sha256';
 

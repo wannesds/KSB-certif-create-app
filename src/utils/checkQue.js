@@ -9,7 +9,7 @@ const queFeed = [
     },
     {
       certifID : "UC-3a3efcc3-1aa0-1a5e-e498-51edd6b9a23a",
-      webID : "https://bob.solidcommunity.net/profile/card#me"
+      webID : "https://wannes.solidcommunity.net/profile/card#me"
     },
     {
       certifID : "UC-2e5abd10-160c-9aed-b1fd-ba179b88429c",
@@ -19,8 +19,9 @@ const queFeed = [
 
 function CheckQue(){
   const { session } = useSession();
-  const queFeedRes = queFeed.find(x => x.webID===session.info.webId);
+  const queFeedRes = queFeed.filter(item => item.webID === session.info.webId);
   //trim "profile/card#me"
+  //get multiple items in array
   return(queFeedRes);
 }
 

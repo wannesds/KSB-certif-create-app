@@ -1,7 +1,7 @@
-import React from 'react';
-import {Web3 } from 'web3';
+import { Web3 } from 'web3';
+import CreateHash from '../utils/createHash';
 
-function SendTxn({}){
+function SendTxn({data}){
 
     //section for connecting to eth thru metamask, put in own file and call it when user wants to do a transaction
     window.addEventListener('load', async () => {
@@ -14,6 +14,8 @@ function SendTxn({}){
             // Request account access if needed
             await window.ethereum.enable();
             // Acccounts now exposed
+
+            const toBeStoredHash = CreateHash(data.webID, data.certifID,(res => res));
   
             //parameters will have to be optimised for easier usage, especially GAS
               const transactionParameters = {
@@ -23,7 +25,7 @@ function SendTxn({}){
                 to: "0x69ce25019cF12de7f78f489cD413A868e44e251c", // Required except during contract publications.
                 from: window.ethereum.selectedAddress, // must match user's active address.
                 value: '100000000000', // Only required to send ether to the recipient from the initiating external account.
-                data: '0x0aaa', // Optional, but used for defining smart contract creation and interaction.
+                data: toBeStoredHash, // Optional, but used for defining smart contract creation and interaction.
                 chainId: '0x3', // Used to prevent transaction reuse across blockchains. Auto-filled by MetaMask.
               };
               // // txHash is a hex string
