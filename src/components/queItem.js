@@ -1,5 +1,5 @@
 import React from 'react';
-import SendTxn from './sendTxn';
+import { SendTxn } from './sendTxn';
 
 function QueItem({data}){
 
