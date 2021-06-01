@@ -1,13 +1,18 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { SendTxn } from './sendTxn';
 
 function QueItem({data}){
+    const [txHash, setTxHash] = useState('');
 
     return(
         <div>
             <p>{data.certifID}</p>
             <p>{data.webID}</p>
-            <button onClick={() => SendTxn(data)}>
+            <input
+                type="text"
+                value={txHash}
+            />
+            <button onClick={() => SendTxn(data,(txHash => setTxHash(txHash)))}>
                 Put on Chain
             </button>
         </div>

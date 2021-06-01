@@ -36,6 +36,7 @@ export async function SendTxn(data){
                     params: [txHash],
                     })
                 });
+                return (txHash);
                 //Show transaction processing progress, NEEDED UX feature 
 
         } catch (error) {
