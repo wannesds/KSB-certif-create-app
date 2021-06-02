@@ -10,7 +10,8 @@ function QueItem({data}){
 
     const callSendTxn = (e) => {
         e.preventDefault();
-        const res = SendTxn(data, (txHash => setResTxHash(txHash)));
+        
+        const res =  SendTxn(data, (txHash => res))
         setResTxHash(res);
         console.log('callSendTxn' , resTxHash, 'test', res)
     }

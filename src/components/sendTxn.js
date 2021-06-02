@@ -25,12 +25,12 @@ export async function SendTxn(data){
                 };
                 // // txHash is a hex string
                 // // "As with any RPC call, it may throw an error"
-                const txHash = window.ethereum.request({
+                const resTxHash = window.ethereum.request({
                     //transaction gets signed with Browser Wallet
                     method: 'eth_sendTransaction',
                     params: [transactionParameters],
                 })//callback hash passed down
-                return (txHash)
+                
                 .then(txHash => {
                     //transaction gets send to on-chain 
                     window.ethereum.request({
@@ -40,7 +40,7 @@ export async function SendTxn(data){
                     //console.log('sendTxn ends with tx hash : ', txHash);
                     
                     console.log('txHash', txHash)
-                    
+                    return (txHash);
                 });
                 
                 

@@ -16,10 +16,11 @@ const authOptions = {
   };
 
 function App() {
-
   const { session } = useSession();
+
   const [todoList, setTodoList] = useState();
   const [oidcIssuer, setOidcIssuer] = useState("");
+  //const [txHash, setTxHash] = useState("");
 
 
   const handleChange = (event) => {
