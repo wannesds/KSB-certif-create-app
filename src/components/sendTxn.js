@@ -1,4 +1,5 @@
 
+import { Component } from 'react';
 import Web3 from 'web3';
 import CreateHash from '../utils/createHash';
 
@@ -40,10 +41,8 @@ export async function SendTxn(data){
                     //console.log('sendTxn ends with tx hash : ', txHash);
                     
                     console.log('txHash', txHash)
-                    return (txHash);
+                    return txHash;
                 });
-                
-                
                 
                 //Show transaction processing progress, NEEDED UX feature 
 
