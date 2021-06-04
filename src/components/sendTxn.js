@@ -18,6 +18,7 @@ export async function SendTxn(data){
                     //nonce: '0x00', // ignored by MetaMask
                     gasPrice: '0x09184e72a000', // customizable by user during MetaMask confirmation.
                     gas: '0x6710', // customizable by user during MetaMask confirmation.
+                    //to: an empty dummy address, could later on resemble a specific Issuer
                     to: "0x69ce25019cF12de7f78f489cD413A868e44e251c", // Required except during contract publications.
                     from: window.ethereum.selectedAddress, // must match user's active address.
                     value: '100000000000', // Only required to send ether to the recipient from the initiating external account.
