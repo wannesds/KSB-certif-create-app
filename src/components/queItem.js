@@ -5,9 +5,9 @@ import CheckIfValid from '../utils/checkIfValid';
 function QueItem({data}){
     const [chainValid, setChainValid] = useState('');
 
-    useEffect(() => {
+    // useEffect(() => {
 
-    }, [chainValid])
+    // }, [chainValid])
 
     const callSendTxn = (e) => {
         e.preventDefault();   
