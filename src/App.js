@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { LoginButton, LogoutButton, Text, useSession, CombinedDataProvider } from "@inrupt/solid-ui-react";
 import { getSolidDataset, getUrlAll, getThing } from "@inrupt/solid-client";
 import { getOrCreateCertifList } from "./utils/getOrCreateCertifList";
-import AddCertif from "./components/addCertif";
 import QueList from './components/queList.js';
 import { GetAllTxns} from './utils/getAllTxns';
 
@@ -18,8 +17,6 @@ const authOptions = {
 
 function App() {
   const { session } = useSession();
-
-  const [todoList, setTodoList] = useState();
   const [oidcIssuer, setOidcIssuer] = useState("");
   //const [txHash, setTxHash] = useState("");
 
@@ -89,10 +86,6 @@ function App() {
               ]} />
               <LogoutButton />
           </div>
-          <section>
-            <AddCertif todoList={todoList} setTodoList={setTodoList}/>
-            {/*<TodoList todoList={todoList} setTodoList={setTodoList}/> */}
-          </section>
           <section>
             <QueList />
           </section>

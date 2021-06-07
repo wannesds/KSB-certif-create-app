@@ -1,17 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { SendTxn } from './sendTxn';
 import CheckIfValid from '../utils/checkIfValid';
+import AddCertif from '../components/addCertif';
 
 function QueItem({data, txnList}){
     const [chainValid, setChainValid] = useState('')
     const [validTxn, setValidTxn] = useState('')
 
-    // useEffect(() => {
-
-    // }, [chainValid])
-
-    const callSendTxn = (e) => {
-        e.preventDefault()  
+    const callSendTxn = () => {
         SendTxn(data)
     }
 
@@ -20,9 +16,13 @@ function QueItem({data, txnList}){
          setChainValid(result.state)
          setValidTxn(result.validTxn)
          console.log(chainValid)
-         //e.preventDefault()
     }
     console.log('queItem for ', data.certifID)
+
+    const callAddCertif = () => {
+        const result = AddCertif(data, validTxn, (res => res))
+        console.log('Stored on Pod? ', result)
+    }
 
     return(
         <div>
@@ -31,9 +31,12 @@ function QueItem({data, txnList}){
             <button onClick={callSendTxn}>
                 Put on Chain
             </button>
-            <p>on Chain : {chainValid? "Yes" : "No"}</p>
+            <p>on Chain : {chainValid? "Yes" : "No"}</p> 
             <button onClick={callCheckIfValid}>
                 Check if Valid on chain
+            </button>
+            <button hidden={!chainValid} onClick={callAddCertif}>
+                Store on my Pod
             </button>
         </div>
     );
