@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { SendTxn } from './sendTxn';
 import CheckIfValid from '../utils/checkIfValid';
 
-function QueItem({data}){
+function QueItem({data, txnList}){
     const [chainValid, setChainValid] = useState('');
 
     // useEffect(() => {
@@ -14,12 +14,11 @@ function QueItem({data}){
         SendTxn(data);
     }
 
-    const callCheckIfValid = (e) => {
-        e.preventDefault();
-         const state = CheckIfValid(data, (res => res));
+    const callCheckIfValid = () => {
+         const state = CheckIfValid(data, txnList, (res => res));
          setChainValid(state);
          console.log(chainValid)
-         
+         //e.preventDefault(); 
     }
 
     return(
@@ -31,7 +30,7 @@ function QueItem({data}){
             </button>
             <p>on Chain : {chainValid? "Yes" : "No"}</p>
             <button onClick={callCheckIfValid}>
-                Is on Chain?
+                Check if Valid on chain
             </button>
         </div>
     );

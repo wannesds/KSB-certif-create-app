@@ -4,6 +4,7 @@ import { getSolidDataset, getUrlAll, getThing } from "@inrupt/solid-client";
 import { getOrCreateCertifList } from "./utils/getOrCreateCertifList";
 import AddCertif from "./components/addCertif";
 import QueList from './components/queList.js';
+import { GetAllTxns} from './utils/getAllTxns';
 
 
 
@@ -26,7 +27,6 @@ function App() {
   const handleChange = (event) => {
     setOidcIssuer(event.target.value);
   };
-
 
   useEffect(() => {
     if (!session || !session.info.isLoggedIn) return;
@@ -67,6 +67,9 @@ function App() {
     
 
     })();
+
+    
+    
   }, [session, session.info.isLoggedIn]);
 
   
