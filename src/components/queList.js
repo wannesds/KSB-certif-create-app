@@ -5,6 +5,7 @@ import QueItem from './queItem';
 
 function QueList(){
     const [txnList, setTxnList] = useState('');
+    //this will give an error if not connected automatically to metamask yet
     const user = window.ethereum.selectedAddress;
     const api = useState(`https://api-rinkeby.etherscan.io/api?module=account&action=txlist&address=${user}&startblock=0&endblock=99999999&sort=asc&apikey=VG1YJWX62VE7Y1G5JENHKSCASJZ4EJ33ZJ`)
     const queListFeed = CheckQue(res => res)

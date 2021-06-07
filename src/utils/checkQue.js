@@ -12,7 +12,7 @@ const queFeed = [
       webID : "https://wannes.solidcommunity.net/profile/card#me"
     },
     {
-      certifID : "UC-2e5abd10-160c-9aed-b1fd-ba179b88429c",
+      certifID : "UC-2e5abd10-160c-9aed-b1fd",
       webID : "https://wannes.solidcommunity.net/profile/card#me"
     }
 ];

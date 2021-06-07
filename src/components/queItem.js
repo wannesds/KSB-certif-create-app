@@ -3,23 +3,26 @@ import { SendTxn } from './sendTxn';
 import CheckIfValid from '../utils/checkIfValid';
 
 function QueItem({data, txnList}){
-    const [chainValid, setChainValid] = useState('');
+    const [chainValid, setChainValid] = useState('')
+    const [validTxn, setValidTxn] = useState('')
 
     // useEffect(() => {
 
     // }, [chainValid])
 
     const callSendTxn = (e) => {
-        e.preventDefault();   
-        SendTxn(data);
+        e.preventDefault()  
+        SendTxn(data)
     }
 
     const callCheckIfValid = () => {
-         const state = CheckIfValid(data, txnList, (res => res));
-         setChainValid(state);
+         const result = CheckIfValid(data, txnList, (res => res))
+         setChainValid(result.state)
+         setValidTxn(result.validTxn)
          console.log(chainValid)
-         //e.preventDefault(); 
+         //e.preventDefault()
     }
+    console.log('queItem for ', data.certifID)
 
     return(
         <div>

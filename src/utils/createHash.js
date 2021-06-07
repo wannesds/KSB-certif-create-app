@@ -1,11 +1,14 @@
 import MerkleTree from 'merkletreejs';
 import SHA256 from 'crypto-js/sha256';
 
-function CreateHash({WebID, Certif}) {
-    const leaves = [WebID, Certif].map(x => SHA256(x))
+function CreateHash(data) {
+    console.log(data)
+    console.log('hashroot prepared :', data.webID, data.certifID)
+    const leaves = [data.webID, data.certifID].map(x => SHA256(x))
     const tree = new MerkleTree(leaves, SHA256)
     const root = tree.getRoot().toString('hex')
     console.log('hashroot created : ', root)
+    console.log(MerkleTree.print(tree))
     // const leaf = SHA256('a')
     // const proof = tree.getProof(leaf)
     // console.log(tree.verify(proof, leaf, root))

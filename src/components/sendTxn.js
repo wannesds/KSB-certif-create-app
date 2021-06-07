@@ -4,7 +4,7 @@ import Web3 from 'web3';
 import CreateHash from '../utils/createHash';
 
 export async function SendTxn(data){
-    console.log('sendTxn receives:', data)
+    console.log('sendTxn receives:', data.certifID, data.webID)
     //const Web3 = require('web3');
     const web3 = new Web3("https://eth-rinkeby.alchemyapi.io/v2/aOmf3RlJunKUJcRWbVXWMdZukj_SMvTl");
     if (window.ethereum) {
@@ -12,7 +12,7 @@ export async function SendTxn(data){
         const txHash = "";
         try {
 
-                const toBeStoredHash = CreateHash(data.webID, data.certifID,(res => res));
+                const toBeStoredHash = CreateHash(data, (res => res));
                 //parameters will have to be optimised for easier usage, especially GAS
                 const transactionParameters = {
                     //nonce: '0x00', // ignored by MetaMask
