@@ -13,7 +13,7 @@ const queFeed = [
     },
     {
       certifID : "UC-2e5abd10-160c-9aed-b1fd-ba179b88429c",
-      webID : "https://alice.solidcommunity.net/"
+      webID : "https://wannes.solidcommunity.net/profile/card#me"
     }
 ];
 

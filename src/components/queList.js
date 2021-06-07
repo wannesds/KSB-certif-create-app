@@ -30,9 +30,7 @@ function QueList(){
             <button onClick={callAllTxns}>
                 Call/Refresh Transactions
             </button>
-            { queListFeed.map(item => {
-                <QueItem data={item} txnList={txnList}/>
-            }) }
+            { queListFeed.map(item => <QueItem data={item} txnList={txnList}/> ) }
         </section>
     );
 }
