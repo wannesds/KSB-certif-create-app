@@ -1,7 +1,5 @@
-
-import { Component } from 'react';
 import Web3 from 'web3';
-import CreateHash from '../utils/createHash';
+import CreateHash from './createHash';
 
 export async function SendTxn(data){
     console.log('sendTxn receives:', data.certifID, data.webID)
@@ -43,6 +41,7 @@ export async function SendTxn(data){
                     
                     console.log('txHash', txHash)
                     return txHash;
+                    //await/promises?
                 });
                 
                 //Show transaction processing progress, NEEDED UX feature 

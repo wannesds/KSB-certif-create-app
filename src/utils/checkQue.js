@@ -8,7 +8,7 @@ const queFeed = [
       webID : "https://wannes.solidcommunity.net/profile/card#me"
     },
     {
-      certifID : "UC-3a3efcc3-1aa0-1a5e-e498-51edd6b9a23a",
+      certifID : "UC-3a3efcc3-1aa0-1a5e-e498-51ed0004423a",
       webID : "https://wannes.solidcommunity.net/profile/card#me"
     },
     {

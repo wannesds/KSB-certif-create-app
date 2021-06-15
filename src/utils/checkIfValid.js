@@ -1,16 +1,22 @@
-import React from 'react';
+import { useState, useEffect } from 'react';
 import CreateHash  from '../utils/createHash';
+//import GetAllTxns from '../utils/getAllTxns';
 
 function CheckIfValid(data, txnList){
-    //hash === hash stored in Txn ? -> return 'true'
-    const array = txnList.result;
-    console.log('array: ', array)
-    const hash = CreateHash(data, (res => res))
 
-    const validTxn = array.find((txn) => txn.input === '0x' + hash)
-    const state = validTxn ? true : false
+        const array = txnList.result;
 
-    console.log('validTxn', validTxn)
+        console.log('!!!!', array)
+
+        console.log('array: ', array)
+        const hash = CreateHash(data, (resHash => resHash))
+
+        const validTxn = array.find((resTxn) => resTxn.input === '0x' + hash)
+        const state = validTxn ? true : false
+
+        console.log('validTxn', validTxn)
+
+    
 
     return {state: state, validTxn: validTxn}
 }

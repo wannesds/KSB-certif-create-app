@@ -7,18 +7,20 @@ import {
 export async function getOrCreateCertifList(containerUri, fetch) {
   const indexUrl = `${containerUri}index.ttl`;
   try {
-    const todoList = await getSolidDataset(indexUrl, { fetch });
-    return todoList;
+    //finds the given dataset if available
+    const certifList = await getSolidDataset(indexUrl, { fetch });
+    return certifList;
   } catch (error) {
     if (error.statusCode === 404) {
-      const todoList = await saveSolidDatasetAt(
+      //if not found, then create new dataset
+      const certifList = await saveSolidDatasetAt(
         indexUrl,
         createSolidDataset(),
         {
           fetch,
         }
       );
-      return todoList;
+      return certifList;
     }
   }
 }

@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import 'tachyons';
 import { LoginButton, LogoutButton, Text, useSession, CombinedDataProvider } from "@inrupt/solid-ui-react";
 import { getSolidDataset, getUrlAll, getThing } from "@inrupt/solid-client";
 import { getOrCreateCertifList } from "./utils/getOrCreateCertifList";
@@ -18,13 +19,14 @@ const authOptions = {
 function App() {
   const { session } = useSession();
   const [oidcIssuer, setOidcIssuer] = useState("");
+  const [certifList, setCertifList] = useState("");
   //const [txHash, setTxHash] = useState("");
 
 
   const handleChange = (event) => {
     setOidcIssuer(event.target.value);
   };
-
+  console.log('app.js certifList state :' , certifList)
   useEffect(() => {
     if (!session || !session.info.isLoggedIn) return;
     (async () => {
@@ -35,7 +37,8 @@ function App() {
       const podsUrls = getUrlAll(profileThing, STORAGE_PREDICATE);
       const pod = podsUrls[0];
       const containerUri = `${pod}certificates/`;
-      await getOrCreateCertifList(containerUri, session.fetch);
+      const list = await getOrCreateCertifList(containerUri, session.fetch);
+      setCertifList(list);
 
       
         const Web3 = require('web3');
@@ -78,16 +81,19 @@ function App() {
           datasetUrl={session.info.webId}
           thingUrl={session.info.webId}
         >
-          <div className="message logged-in">
+          <div className="message logged-in f4">
             <span>You are logged in as: </span>
-            <Text properties={[
-                "http://www.w3.org/2006/vcard/ns#fn",
-                "http://xmlns.com/foaf/0.1/name",
-              ]} />
-              <LogoutButton />
+              <Text 
+                properties={[
+                  "http://www.w3.org/2006/vcard/ns#fn",
+                  "http://xmlns.com/foaf/0.1/name",
+                ]} 
+                className="ma2 dark-blue"
+              />
+              <LogoutButton/>
           </div>
           <section>
-            <QueList />
+            <QueList certifList={certifList} setCertifList={setCertifList}/>
           </section>
         </CombinedDataProvider>
       ) : (  //if not logged in then
