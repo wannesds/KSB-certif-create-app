@@ -19,6 +19,8 @@ const queFeed = [
 
 function CheckQue(){
   const { session } = useSession();
+  
+  //checks the certif que feed for all that match user Pod WebID
   const queFeedRes = queFeed.filter(item => item.webID === session.info.webId);
   //trim "profile/card#me"
   //get multiple items in array
