@@ -2,8 +2,7 @@ import Web3 from 'web3';
 import CreateHash from './createHash';
 
 export async function SendTxn(data){
-    console.log('sendTxn receives:', data.certifID, data.webID)
-    //const Web3 = require('web3');
+
     const web3 = new Web3("https://eth-rinkeby.alchemyapi.io/v2/aOmf3RlJunKUJcRWbVXWMdZukj_SMvTl");
     if (window.ethereum) {
         window.web3 = new Web3("https://eth-rinkeby.alchemyapi.io/v2/aOmf3RlJunKUJcRWbVXWMdZukj_SMvTl");
@@ -39,7 +38,6 @@ export async function SendTxn(data){
                     })
                     //console.log('sendTxn ends with tx hash : ', txHash);
                     
-                    console.log('txHash', txHash)
                     return txHash;
                     //await/promises?
                 });

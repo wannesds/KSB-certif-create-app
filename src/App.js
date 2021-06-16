@@ -4,11 +4,6 @@ import { LoginButton, LogoutButton, Text, useSession, CombinedDataProvider } fro
 import { getSolidDataset, getUrlAll, getThing } from "@inrupt/solid-client";
 import { getOrCreateCertifList } from "./utils/getOrCreateCertifList";
 import QueList from './components/queList.js';
-import { GetAllTxns} from './utils/getAllTxns';
-
-
-
-//custom alchemy API for connecting to an ethereum node, seems good for developing purposes and low scale app usage
 
 const STORAGE_PREDICATE = "http://www.w3.org/ns/pim/space#storage";
 
@@ -17,16 +12,15 @@ const authOptions = {
   };
 
 function App() {
+
   const { session } = useSession();
   const [oidcIssuer, setOidcIssuer] = useState("");
   const [certifList, setCertifList] = useState("");
-  //const [txHash, setTxHash] = useState("");
-
 
   const handleChange = (event) => {
     setOidcIssuer(event.target.value);
   };
-  console.log('app.js certifList state :' , certifList)
+
   useEffect(() => {
     if (!session || !session.info.isLoggedIn) return;
     (async () => {

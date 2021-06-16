@@ -1,9 +1,9 @@
 import React, {useEffect, useState} from 'react';
 import CheckQue from '../utils/checkQue';
 import QueItem from './queItem';
-//import { GetAllTxns } from '../utils/getAllTxns';
 
 function QueList({certifList, setCertifList}){
+    
     const queListFeed = CheckQue(res => res)
    
     return(

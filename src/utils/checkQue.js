@@ -1,7 +1,7 @@
 //get logged in WebID and check it against WebID's from QueList
 import { useSession } from "@inrupt/solid-ui-react";
 
-//temp
+//temp que list
 const queFeed = [ 
     {
       certifID : "UC-4fd7adbc-9a20-4a86-b3ed-ba179b88429c",
