@@ -3,33 +3,14 @@ import { SendTxn } from '../utils/sendTxn';
 import CheckIfValid from '../utils/checkIfValid';
 import AddCertif from '../components/addCertif';
 
-function QueItem({data, certifList, setCertifList}){
+function QueItem({data, certifList, setCertifList, txnList, gasPrice}){
 
     const [chainValid, setChainValid] = useState('')
     const [validTxn, setValidTxn] = useState('')
-    const [txnList, setTxnList] = useState('')
-
-    //custom alchemy API for connecting to an ethereum node, seems good for developing purposes and low scale app usage
-    const user = window.ethereum.selectedAddress;
-    //API key should be in back-end or no key to be used > less calls/sec
-    const api = useState(`https://api-rinkeby.etherscan.io/api?module=account&action=txlist&address=${user}&startblock=0&endblock=99999999&sort=asc&apikey=VG1YJWX62VE7Y1G5JENHKSCASJZ4EJ33ZJ`)
-    
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                fetch(api)
-                .then(response => response.json())
-                .then(res => setTxnList(res))
-            } catch (error) {
-                console.log('Etherscan API fetch has failed')
-            } 
-        }
-        fetchData()
-        //fetches all Transactions from given user
-    },[])
+    console.log('validTxn :', validTxn)
 
     const callSendTxn = () => {
-        SendTxn(data)
+        SendTxn(data, gasPrice)
     }
 
     const callCheckIfValid = () => {

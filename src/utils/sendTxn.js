@@ -1,19 +1,23 @@
+import {useState} from 'react';
 import Web3 from 'web3';
 import CreateHash from './createHash';
 
-export async function SendTxn(data){
+export async function SendTxn(data, gasPrice){
 
     const web3 = new Web3("https://eth-rinkeby.alchemyapi.io/v2/aOmf3RlJunKUJcRWbVXWMdZukj_SMvTl");
     if (window.ethereum) {
         window.web3 = new Web3("https://eth-rinkeby.alchemyapi.io/v2/aOmf3RlJunKUJcRWbVXWMdZukj_SMvTl");
-        const txHash = "";
+        const txHash = "";//not nessecary?
+
+        console.log('gasPrice : ', gasPrice )
+
         try {
 
                 const toBeStoredHash = CreateHash(data, (res => res));
                 //parameters will have to be optimised for easier usage, especially GAS
                 const transactionParameters = {
                     //nonce: '0x00', // ignored by MetaMask
-                    gasPrice: '0x09184e72a000', // customizable by user during MetaMask confirmation.
+                    gasPrice: gasPrice.result, // customizable by user during MetaMask confirmation.
                     gas: '0x6710', // customizable by user during MetaMask confirmation.
                     //to: an empty dummy address, could later on resemble a specific Issuer
                     to: "0x69ce25019cF12de7f78f489cD413A868e44e251c", // Required except during contract publications.
