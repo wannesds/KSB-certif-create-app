@@ -8,8 +8,8 @@ import QueList from './components/queList.js';
 const STORAGE_PREDICATE = "http://www.w3.org/ns/pim/space#storage";
 
 const authOptions = {
-    clientName: "Certif-create App",
-  };
+  clientName: "Certif-create App",
+};
 
 function App() {
 

@@ -52,6 +52,7 @@ function AddCertif({ data, validTxn, certifList, setCertifList}) {
     </button>
   );
   //implement a button to initialize
+  //proper way would be to make this a utility component aswell tho
       
 }
 

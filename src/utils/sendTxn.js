@@ -3,6 +3,7 @@ import Web3 from 'web3';
 import CreateHash from './createHash';
 
 export async function SendTxn(data, gasPrice){
+    //destructering?
 
     const web3 = new Web3("https://eth-rinkeby.alchemyapi.io/v2/aOmf3RlJunKUJcRWbVXWMdZukj_SMvTl");
     if (window.ethereum) {
